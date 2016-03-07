@@ -3,21 +3,24 @@ package com.bgagnonadam.telephony.ws.infrastructure;
 import com.bgagnonadam.telephony.ws.domain.Record;
 import com.bgagnonadam.telephony.ws.domain.RecordRepository;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/**
- * Created by Bruno on 2016-03-06.
- */
+
 public class RecordRepositoryInMemory implements RecordRepository {
 
   Map<String, Record> records = new HashMap<>();
 
   @Override
   public List<Record> findAll() {
-    return records.values().stream().collect(Collectors.toList());
+    if (records.values().size() > 0) {
+      return records.values().stream().collect(Collectors.toList());
+    } else {
+      return new ArrayList<>();
+    }
   }
 
   @Override
