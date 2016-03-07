@@ -10,31 +10,32 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
+import java.util.List;
 
 /**
  * Created by Bruno on 2016-03-05.
  */
-@Path("/home")
+@Path("/telephony/record")
 public interface TelephonyResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  String getEntries();
+  List<RecordDto> getRecords();
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
   @Path("{id}")
-  String getEntry(@PathParam("id") String id);
+  RecordDto getRecord(@PathParam("id") String id);
 
   @POST
-  void addEntry();
+  void addRecord(RecordDto recordDto);
 
   @PUT
   @Path("{id}")
-  void updateEntry(@PathParam("id") String id,
-                   RecordDto recordDto);
+  void updateRecord(@PathParam("id") String id,
+                    RecordDto recordDto);
 
   @DELETE
   @Path("{id}")
-  void deleteEntry(@PathParam("id") String id);
+  void deleteRecord(@PathParam("id") String id);
 }

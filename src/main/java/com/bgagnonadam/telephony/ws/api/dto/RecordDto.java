@@ -9,10 +9,6 @@ public class RecordDto {
   private String address;
   private String name;
 
-  public String getId() {
-    return id;
-  }
-
   public void setId(String id) {
     this.id = id;
   }

@@ -1,35 +1,43 @@
 package com.bgagnonadam.telephony.ws.api;
 
 import com.bgagnonadam.telephony.ws.api.dto.RecordDto;
+import com.bgagnonadam.telephony.ws.domain.RecordService;
+
+import java.util.List;
 
 /**
  * Created by Bruno on 2016-03-05.
  */
 public class TelephonyResourceImpl implements TelephonyResource {
 
+  private RecordService recordService;
 
-  @Override
-  public String getEntries() {
-    return "{'hi':'farts'}";
+  public TelephonyResourceImpl(RecordService recordService) {
+    this.recordService = recordService;
   }
 
   @Override
-  public String getEntry(String id) {
-    return "{'hi':'"+id+"'}";
+  public List<RecordDto> getRecords() {
+    return recordService.findAllRecords();
   }
 
   @Override
-  public void addEntry() {
-
+  public RecordDto getRecord(String id) {
+    return recordService.findRecord(id);
   }
 
   @Override
-  public void updateEntry(String id, RecordDto recordDto) {
-    System.out.println(recordDto.toString());
+  public void addRecord(RecordDto recordDto) {
+    recordService.addRecord(recordDto);
   }
 
   @Override
-  public void deleteEntry(String id) {
+  public void updateRecord(String id, RecordDto recordDto) {
+    recordService.updateRecord(id, recordDto);
+  }
 
+  @Override
+  public void deleteRecord(String id) {
+    recordService.deleteRecord(id);
   }
 }

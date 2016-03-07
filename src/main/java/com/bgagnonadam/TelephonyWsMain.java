@@ -1,6 +1,10 @@
 package com.bgagnonadam;
 
 import com.bgagnonadam.telephony.ws.api.TelephonyResourceImpl;
+import com.bgagnonadam.telephony.ws.domain.RecordAssembler;
+import com.bgagnonadam.telephony.ws.domain.RecordRepository;
+import com.bgagnonadam.telephony.ws.domain.RecordService;
+import com.bgagnonadam.telephony.ws.infrastructure.RecordRepositoryInMemory;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
@@ -18,12 +22,15 @@ public class TelephonyWsMain {
   public static void main(String[] args)
           throws Exception {
 
-    // Setup resources' dependencies
+    // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
+    RecordRepository recordRepository = new RecordRepositoryInMemory();
+    RecordAssembler recordAssembler = new RecordAssembler();
+    RecordService recordService = new RecordService(recordRepository, recordAssembler);
 
-    // Setup resources
-    TelephonyResourceImpl telephonyRepository = new TelephonyResourceImpl();
+    // Setup resources (API)
+    TelephonyResourceImpl telephonyRepository = new TelephonyResourceImpl(recordService);
 
-    // Setup context
+    // Setup context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
     context.setContextPath("/");
     ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {

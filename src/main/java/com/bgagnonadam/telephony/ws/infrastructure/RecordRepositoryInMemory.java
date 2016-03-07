@@ -1,4 +1,4 @@
-package com.bgagnonadam.telephony.ws.telephony.ws.infrastructure;
+package com.bgagnonadam.telephony.ws.infrastructure;
 
 import com.bgagnonadam.telephony.ws.domain.Record;
 import com.bgagnonadam.telephony.ws.domain.RecordRepository;
@@ -31,7 +31,7 @@ public class RecordRepositoryInMemory implements RecordRepository {
     if (foundRecord != null) {
       records.put(record.getId(), record);
     } else {
-      throw new IllegalArgumentException("Record inexistant, cannot be updated");
+      throw new IllegalArgumentException("Record not found, cannot be updated");
     }
   }
 
