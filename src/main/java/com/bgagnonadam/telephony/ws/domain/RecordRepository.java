@@ -10,7 +10,8 @@ public interface RecordRepository {
 
   Record findById(String id);
 
-  void update(Record record);
+  void update(Record record)
+          throws RecordNotFoundException;
 
   void save(Record record);
 

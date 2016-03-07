@@ -1,8 +1,11 @@
 package com.bgagnonadam.telephony.ws.api;
 
 import com.bgagnonadam.telephony.ws.api.dto.RecordDto;
+import com.bgagnonadam.telephony.ws.domain.RecordNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.RecordService;
 
+import javax.ws.rs.WebApplicationException;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -33,7 +36,13 @@ public class RecordResourceImpl implements RecordResource {
 
   @Override
   public void updateRecord(String id, RecordDto recordDto) {
-    recordService.updateRecord(id, recordDto);
+    try {
+      recordService.updateRecord(id, recordDto);
+    } catch (RecordNotFoundException e) {
+      throw new WebApplicationException(Response.status(Response.Status.NOT_FOUND)
+                                                .entity(e.getMessage())
+                                                .build());
+    }
   }
 
   @Override

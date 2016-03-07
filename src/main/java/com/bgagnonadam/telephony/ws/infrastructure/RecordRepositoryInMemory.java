@@ -1,6 +1,7 @@
 package com.bgagnonadam.telephony.ws.infrastructure;
 
 import com.bgagnonadam.telephony.ws.domain.Record;
+import com.bgagnonadam.telephony.ws.domain.RecordNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.RecordRepository;
 
 import java.util.ArrayList;
@@ -29,12 +30,13 @@ public class RecordRepositoryInMemory implements RecordRepository {
   }
 
   @Override
-  public void update(Record record) {
+  public void update(Record record)
+          throws RecordNotFoundException {
     Record foundRecord = records.get(record.getId());
     if (foundRecord != null) {
       records.put(record.getId(), record);
     } else {
-      throw new IllegalArgumentException("Record not found, cannot be updated");
+      throw new RecordNotFoundException("Record not found, cannot be updated");
     }
   }
 

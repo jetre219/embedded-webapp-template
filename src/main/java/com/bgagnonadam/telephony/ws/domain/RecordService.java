@@ -35,7 +35,8 @@ public class RecordService {
     recordRepository.save(record);
   }
 
-  public void updateRecord(String id, RecordDto recordDto) {
+  public void updateRecord(String id, RecordDto recordDto)
+          throws RecordNotFoundException {
     Record record = recordAssembler.create(recordDto);
     record.setId(id);
     recordRepository.update(record);
