@@ -8,11 +8,11 @@ import java.util.List;
 /**
  * Created by Bruno on 2016-03-05.
  */
-public class TelephonyResourceImpl implements TelephonyResource {
+public class RecordResourceImpl implements RecordResource {
 
   private RecordService recordService;
 
-  public TelephonyResourceImpl(RecordService recordService) {
+  public RecordResourceImpl(RecordService recordService) {
     this.recordService = recordService;
   }
 

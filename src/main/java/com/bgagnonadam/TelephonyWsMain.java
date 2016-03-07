@@ -1,6 +1,6 @@
 package com.bgagnonadam;
 
-import com.bgagnonadam.telephony.ws.api.TelephonyResourceImpl;
+import com.bgagnonadam.telephony.ws.api.RecordResourceImpl;
 import com.bgagnonadam.telephony.ws.domain.RecordAssembler;
 import com.bgagnonadam.telephony.ws.domain.RecordRepository;
 import com.bgagnonadam.telephony.ws.domain.RecordService;
@@ -28,7 +28,7 @@ public class TelephonyWsMain {
     RecordService recordService = new RecordService(recordRepository, recordAssembler);
 
     // Setup resources (API)
-    TelephonyResourceImpl telephonyRepository = new TelephonyResourceImpl(recordService);
+    RecordResourceImpl recordResource = new RecordResourceImpl(recordService);
 
     // Setup context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -38,7 +38,7 @@ public class TelephonyWsMain {
       public Set<Object> getSingletons() {
         HashSet<Object> resources = new HashSet<>();
         // Add resources to context
-        resources.add(telephonyRepository);
+        resources.add(recordResource);
         return resources;
       }
     });
