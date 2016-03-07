@@ -1,5 +1,6 @@
 package com.bgagnonadam;
 
+import com.bgagnonadam.telephony.ws.api.RecordResource;
 import com.bgagnonadam.telephony.ws.api.RecordResourceImpl;
 import com.bgagnonadam.telephony.ws.domain.RecordAssembler;
 import com.bgagnonadam.telephony.ws.domain.RecordRepository;
@@ -22,13 +23,9 @@ public class TelephonyWsMain {
   public static void main(String[] args)
           throws Exception {
 
-    // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
-    RecordRepository recordRepository = new RecordRepositoryInMemory();
-    RecordAssembler recordAssembler = new RecordAssembler();
-    RecordService recordService = new RecordService(recordRepository, recordAssembler);
-
     // Setup resources (API)
-    RecordResourceImpl recordResource = new RecordResourceImpl(recordService);
+    RecordResource recordResource = createRecordResource();
+
 
     // Setup context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -56,5 +53,14 @@ public class TelephonyWsMain {
     } finally {
       server.destroy();
     }
+  }
+
+  private static RecordResource createRecordResource() {
+    // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
+    RecordRepository recordRepository = new RecordRepositoryInMemory();
+    RecordAssembler recordAssembler = new RecordAssembler();
+    RecordService recordService = new RecordService(recordRepository, recordAssembler);
+
+    return new RecordResourceImpl(recordService);
   }
 }

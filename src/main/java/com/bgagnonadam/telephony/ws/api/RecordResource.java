@@ -12,9 +12,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-/**
- * Created by Bruno on 2016-03-05.
- */
 @Path("/telephony/record")
 public interface RecordResource {
 

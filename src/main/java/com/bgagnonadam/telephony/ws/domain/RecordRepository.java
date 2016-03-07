@@ -2,9 +2,6 @@ package com.bgagnonadam.telephony.ws.domain;
 
 import java.util.List;
 
-/**
- * Created by Bruno on 2016-03-06.
- */
 public interface RecordRepository {
   List<Record> findAll();
 

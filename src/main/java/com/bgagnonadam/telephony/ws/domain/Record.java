@@ -1,8 +1,5 @@
 package com.bgagnonadam.telephony.ws.domain;
 
-/**
- * Created by Bruno on 2016-03-06.
- */
 public class Record {
   private String id;
   private String telephoneNumber;

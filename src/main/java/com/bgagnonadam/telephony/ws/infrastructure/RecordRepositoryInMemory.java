@@ -10,10 +10,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
 public class RecordRepositoryInMemory implements RecordRepository {
 
-  Map<String, Record> records = new HashMap<>();
+  private Map<String, Record> records = new HashMap<>();
 
   @Override
   public List<Record> findAll() {

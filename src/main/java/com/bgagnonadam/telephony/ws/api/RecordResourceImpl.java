@@ -8,9 +8,6 @@ import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
 import java.util.List;
 
-/**
- * Created by Bruno on 2016-03-05.
- */
 public class RecordResourceImpl implements RecordResource {
 
   private RecordService recordService;

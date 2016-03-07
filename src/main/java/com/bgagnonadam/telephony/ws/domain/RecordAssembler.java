@@ -2,9 +2,6 @@ package com.bgagnonadam.telephony.ws.domain;
 
 import com.bgagnonadam.telephony.ws.api.dto.RecordDto;
 
-/**
- * Created by Bruno on 2016-03-06.
- */
 public class RecordAssembler {
   public Record create(RecordDto recordDto) {
     Record record = new Record();
