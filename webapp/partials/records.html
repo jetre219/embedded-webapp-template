@@ -1,0 +1,13 @@
+<a ui-sref="newRecord" class="btn-primary btn-lg nodecoration">Add New Record</a>
+<table class="table recordtable">
+    <tr>
+        <td><h3>All Telephony Records</h3></td>
+        <td></td>
+    </tr>
+    <tr ng-repeat="record in records">
+        <td>{{record.name}}</td>
+        <td>
+            <a class="btn btn-primary" ui-sref="viewRecord({id:record.id})">View</a>
+        </td>
+    </tr>
+</table>
