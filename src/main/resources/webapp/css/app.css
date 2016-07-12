@@ -2,11 +2,11 @@
     margin-top:10px;
 }
 
-.recordtable tr td:nth-child(2){
+.contacttable tr td:nth-child(2){
     width: 150px;
 }
 
-.recordtable tr:nth-child(1) td{
+.contacttable tr:nth-child(1) td{
     border-top: none;
 }
 a.nodecoration{

@@ -1,0 +1,23 @@
+angular.module('telephonyApp',['ui.router','ngResource','telephonyApp.controllers','telephonyApp.services']);
+
+angular.module('telephonyApp').config(function($stateProvider,$httpProvider){
+    $stateProvider.state('contacts',{
+        url:'/contacts',
+        templateUrl:'partials/contacts.html',
+        controller:'ContactListController'
+    }).state('viewContact',{
+       url:'/contacts/:id',
+       templateUrl:'partials/contact-view.html',
+       controller:'ContactViewController'
+    }).state('newContact',{
+        url:'/contacts',
+        templateUrl:'partials/contact-add.html',
+        controller:'ContactCreateController'
+    }).state('editContact',{
+        url:'/contacts/:id',
+        templateUrl:'partials/contact-edit.html',
+        controller:'ContactEditController'
+    });
+}).run(function($state){
+   $state.go('contacts');
+});

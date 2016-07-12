@@ -1,5 +1,5 @@
-angular.module('telephonyApp.services',[]).factory('Record',function($resource){
-    return $resource('http://localhost:8090/api/telephony/records/:id',{id:'@id'},{
+angular.module('telephonyApp.services',[]).factory('Contact',function($resource){
+    return $resource('http://localhost:8080/api/telephony/contacts/:id',{id:'@id'},{
         update: {
             method: 'PUT'
         },

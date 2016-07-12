@@ -1,17 +1,20 @@
 package com.bgagnonadam;
 
-import com.bgagnonadam.telephony.ws.api.RecordResource;
-import com.bgagnonadam.telephony.ws.api.RecordResourceImpl;
-import com.bgagnonadam.telephony.ws.domain.Record;
-import com.bgagnonadam.telephony.ws.domain.RecordAssembler;
-import com.bgagnonadam.telephony.ws.domain.RecordRepository;
-import com.bgagnonadam.telephony.ws.domain.RecordService;
+import com.bgagnonadam.telephony.ws.api.ContactResource;
+import com.bgagnonadam.telephony.ws.api.ContactResourceImpl;
+import com.bgagnonadam.telephony.ws.domain.Contact;
+import com.bgagnonadam.telephony.ws.domain.ContactAssembler;
+import com.bgagnonadam.telephony.ws.domain.ContactRepository;
+import com.bgagnonadam.telephony.ws.domain.ContactService;
 import com.bgagnonadam.telephony.ws.infrastructure.CORSResponseFilter;
-import com.bgagnonadam.telephony.ws.infrastructure.RecordDevDataFactory;
-import com.bgagnonadam.telephony.ws.infrastructure.RecordRepositoryInMemory;
+import com.bgagnonadam.telephony.ws.infrastructure.ContactDevDataFactory;
+import com.bgagnonadam.telephony.ws.infrastructure.ContactRepositoryInMemory;
+import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.server.handler.ContextHandlerCollection;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.webapp.WebAppContext;
 import org.glassfish.jersey.server.ResourceConfig;
 import org.glassfish.jersey.servlet.ServletContainer;
 
@@ -28,18 +31,18 @@ public class TelephonyWsMain {
           throws Exception {
 
     // Setup resources (API)
-    RecordResource recordResource = createRecordResource();
+    ContactResource contactResource = createContactResource();
 
 
-    // Setup context (JERSEY + JETTY)
+    // Setup API context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
-    context.setContextPath("/");
+    context.setContextPath("/api/");
     ResourceConfig resourceConfig = ResourceConfig.forApplication(new Application() {
       @Override
       public Set<Object> getSingletons() {
         HashSet<Object> resources = new HashSet<>();
         // Add resources to context
-        resources.add(recordResource);
+        resources.add(contactResource);
         return resources;
       }
     });
@@ -49,9 +52,17 @@ public class TelephonyWsMain {
     ServletHolder servletHolder = new ServletHolder(servletContainer);
     context.addServlet(servletHolder, "/*");
 
+    // Setup static file context (WEBAPP)
+    WebAppContext webapp = new WebAppContext();
+    webapp.setResourceBase(webapp.getClass().getClassLoader().getResource("webapp").toExternalForm());
+    webapp.setContextPath("/");
+    webapp.setParentLoaderPriority(true);
+
     // Setup http server
-    Server server = new Server(8090);
-    server.setHandler(context);
+    ContextHandlerCollection contexts = new ContextHandlerCollection();
+    contexts.setHandlers(new Handler[] { context, webapp });
+    Server server = new Server(8080);
+    server.setHandler(contexts);
 
     try {
       server.start();
@@ -61,18 +72,18 @@ public class TelephonyWsMain {
     }
   }
 
-  private static RecordResource createRecordResource() {
+  private static ContactResource createContactResource() {
     // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
-    RecordRepository recordRepository = new RecordRepositoryInMemory();
+    ContactRepository contactRepository = new ContactRepositoryInMemory();
 
     // For development ease
-    RecordDevDataFactory recordDevDataFactory = new RecordDevDataFactory();
-    List<Record> records = recordDevDataFactory.createMockData();
-    records.stream().forEach(s -> recordRepository.save(s));
+    ContactDevDataFactory contactDevDataFactory = new ContactDevDataFactory();
+    List<Contact> contacts = contactDevDataFactory.createMockData();
+    contacts.stream().forEach(contactRepository::save);
 
-    RecordAssembler recordAssembler = new RecordAssembler();
-    RecordService recordService = new RecordService(recordRepository, recordAssembler);
+    ContactAssembler contactAssembler = new ContactAssembler();
+    ContactService contactService = new ContactService(contactRepository, contactAssembler);
 
-    return new RecordResourceImpl(recordService);
+    return new ContactResourceImpl(contactService);
   }
 }
