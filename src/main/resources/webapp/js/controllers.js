@@ -1,4 +1,5 @@
-angular.module('telephonyApp.controllers', []).controller('ContactListController', function ($scope, $state, $window, Contact) {
+angular.module('telephonyApp.controllers', [])
+.controller('ContactListController', function ($scope, $state, $window, Contact) {
 
     $scope.contacts = Contact.query();
 
