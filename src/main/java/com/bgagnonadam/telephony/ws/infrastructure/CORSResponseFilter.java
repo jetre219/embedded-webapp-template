@@ -6,9 +6,6 @@ import javax.ws.rs.container.ContainerResponseFilter;
 import javax.ws.rs.core.MultivaluedMap;
 import java.io.IOException;
 
-/**
- * Created by Bruno on 2016-06-20.
- */
 public class CORSResponseFilter implements ContainerResponseFilter {
 
 

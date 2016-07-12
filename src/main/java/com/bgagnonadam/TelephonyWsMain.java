@@ -26,6 +26,7 @@ import java.util.Set;
 /**
  * RESTApi setup without using DI or spring
  */
+@SuppressWarnings("all")
 public class TelephonyWsMain {
   public static void main(String[] args)
           throws Exception {

@@ -1,8 +1,5 @@
 package com.bgagnonadam.telephony.ws.api.dto;
 
-/**
- * Created by Bruno on 2016-03-05.
- */
 public class ContactDto {
   private String id;
   private String telephoneNumber;

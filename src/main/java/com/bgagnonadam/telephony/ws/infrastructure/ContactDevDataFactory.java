@@ -5,9 +5,6 @@ import jersey.repackaged.com.google.common.collect.Lists;
 
 import java.util.List;
 
-/**
- * Created by Bruno on 2016-06-20.
- */
 public class ContactDevDataFactory {
 
   public List<Contact> createMockData() {
