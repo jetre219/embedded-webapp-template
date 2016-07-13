@@ -5,18 +5,18 @@ import com.bgagnonadam.telephony.ws.api.dto.ContactDto;
 public class ContactAssembler {
   public Contact create(ContactDto contactDto) {
     Contact contact = new Contact();
-    contact.setAddress(contactDto.getAddress());
-    contact.setTelephoneNumber(contactDto.getTelephoneNumber());
-    contact.setName(contactDto.getName());
+    contact.setAddress(contactDto.address);
+    contact.setTelephoneNumber(contactDto.telephoneNumber);
+    contact.setName(contactDto.name);
     return contact;
   }
 
   public ContactDto create(Contact contact) {
     ContactDto contactDto = new ContactDto();
-    contactDto.setAddress(contact.getAddress());
-    contactDto.setTelephoneNumber(contact.getTelephoneNumber());
-    contactDto.setName(contact.getName());
-    contactDto.setId(contact.getId());
+    contactDto.address = contact.getAddress();
+    contactDto.telephoneNumber = contact.getTelephoneNumber();
+    contactDto.name = contact.getName();
+    contactDto.id = contact.getId();
     return contactDto;
   }
 }
