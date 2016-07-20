@@ -1,14 +1,14 @@
 package com.bgagnonadam;
 
-import com.bgagnonadam.telephony.ws.api.ContactResource;
-import com.bgagnonadam.telephony.ws.api.ContactResourceImpl;
-import com.bgagnonadam.telephony.ws.domain.Contact;
-import com.bgagnonadam.telephony.ws.domain.ContactAssembler;
-import com.bgagnonadam.telephony.ws.domain.ContactRepository;
-import com.bgagnonadam.telephony.ws.domain.ContactService;
-import com.bgagnonadam.telephony.ws.infrastructure.CORSResponseFilter;
-import com.bgagnonadam.telephony.ws.infrastructure.ContactDevDataFactory;
-import com.bgagnonadam.telephony.ws.infrastructure.ContactRepositoryInMemory;
+import com.bgagnonadam.telephony.ws.api.contact.ContactResource;
+import com.bgagnonadam.telephony.ws.api.contact.ContactResourceImpl;
+import com.bgagnonadam.telephony.ws.domain.contact.Contact;
+import com.bgagnonadam.telephony.ws.domain.contact.ContactAssembler;
+import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
+import com.bgagnonadam.telephony.ws.domain.contact.ContactService;
+import com.bgagnonadam.telephony.ws.http.CORSResponseFilter;
+import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactDevDataFactory;
+import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactRepositoryInMemory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -28,6 +28,8 @@ import java.util.Set;
  */
 @SuppressWarnings("all")
 public class TelephonyWsMain {
+  public static boolean isDev = true; // Would be a JVM argument or in a .property file
+
   public static void main(String[] args)
           throws Exception {
 
@@ -78,9 +80,11 @@ public class TelephonyWsMain {
     ContactRepository contactRepository = new ContactRepositoryInMemory();
 
     // For development ease
-    ContactDevDataFactory contactDevDataFactory = new ContactDevDataFactory();
-    List<Contact> contacts = contactDevDataFactory.createMockData();
-    contacts.stream().forEach(contactRepository::save);
+    if (isDev) {
+      ContactDevDataFactory contactDevDataFactory = new ContactDevDataFactory();
+      List<Contact> contacts = contactDevDataFactory.createMockData();
+      contacts.stream().forEach(contactRepository::save);
+    }
 
     ContactAssembler contactAssembler = new ContactAssembler();
     ContactService contactService = new ContactService(contactRepository, contactAssembler);
