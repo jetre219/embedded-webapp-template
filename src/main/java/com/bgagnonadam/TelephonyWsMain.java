@@ -2,13 +2,21 @@ package com.bgagnonadam;
 
 import com.bgagnonadam.telephony.ws.api.contact.ContactResource;
 import com.bgagnonadam.telephony.ws.api.contact.ContactResourceImpl;
+import com.bgagnonadam.telephony.ws.api.log.LogResource;
+import com.bgagnonadam.telephony.ws.api.log.LogResourceImpl;
 import com.bgagnonadam.telephony.ws.domain.contact.Contact;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactAssembler;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactService;
+import com.bgagnonadam.telephony.ws.domain.log.Log;
+import com.bgagnonadam.telephony.ws.domain.log.LogAssembler;
+import com.bgagnonadam.telephony.ws.domain.log.LogRepository;
+import com.bgagnonadam.telephony.ws.domain.log.LogService;
 import com.bgagnonadam.telephony.ws.http.CORSResponseFilter;
 import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactDevDataFactory;
 import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactRepositoryInMemory;
+import com.bgagnonadam.telephony.ws.infrastructure.log.LogDevDataFactory;
+import com.bgagnonadam.telephony.ws.infrastructure.log.LogRepositoryInMemory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -35,7 +43,7 @@ public class TelephonyWsMain {
 
     // Setup resources (API)
     ContactResource contactResource = createContactResource();
-
+    LogResource logResource = createLogResource();
 
     // Setup API context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -46,6 +54,7 @@ public class TelephonyWsMain {
         HashSet<Object> resources = new HashSet<>();
         // Add resources to context
         resources.add(contactResource);
+        resources.add(logResource);
         return resources;
       }
     });
@@ -90,5 +99,22 @@ public class TelephonyWsMain {
     ContactService contactService = new ContactService(contactRepository, contactAssembler);
 
     return new ContactResourceImpl(contactService);
+  }
+
+  private static LogResource createLogResource() {
+    // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
+    LogRepository logRepository = new LogRepositoryInMemory();
+
+    // For development ease
+    if (isDev) {
+      LogDevDataFactory logDevDataFactory = new LogDevDataFactory();
+      List<Log> logs = logDevDataFactory.createMockData();
+      logs.stream().forEach(logRepository::save);
+    }
+
+    LogAssembler logAssembler = new LogAssembler();
+    LogService logService = new LogService(logRepository, logAssembler);
+
+    return new LogResourceImpl(logService);
   }
 }

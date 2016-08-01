@@ -5,7 +5,10 @@ import com.bgagnonadam.telephony.ws.domain.contact.ContactNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
 import jersey.repackaged.com.google.common.collect.Lists;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ContactRepositoryInMemory implements ContactRepository {
 
