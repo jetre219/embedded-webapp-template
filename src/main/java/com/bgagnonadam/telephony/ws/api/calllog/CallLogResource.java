@@ -1,7 +1,7 @@
-package com.bgagnonadam.telephony.ws.api.log;
+package com.bgagnonadam.telephony.ws.api.calllog;
 
 
-import com.bgagnonadam.telephony.ws.api.log.dto.LogDto;
+import com.bgagnonadam.telephony.ws.api.calllog.dto.CallLogDto;
 
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
@@ -11,14 +11,14 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import java.util.List;
 
-@Path("/telephony/logs")
-public interface LogResource {
+@Path("/telephony/calllogs")
+public interface CallLogResource {
 
   @GET
   @Produces(MediaType.APPLICATION_JSON)
-  List<LogDto> getLogs();
+  List<CallLogDto> getCallLogs();
 
   @DELETE
   @Path("{id}")
-  void deleteLog(@PathParam("id") String id);
+  void deleteCallLog(@PathParam("id") String id);
 }

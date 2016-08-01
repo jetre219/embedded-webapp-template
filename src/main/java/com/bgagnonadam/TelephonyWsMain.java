@@ -1,22 +1,22 @@
 package com.bgagnonadam;
 
+import com.bgagnonadam.telephony.ws.api.calllog.CallLogResource;
+import com.bgagnonadam.telephony.ws.api.calllog.CallLogResourceImpl;
 import com.bgagnonadam.telephony.ws.api.contact.ContactResource;
 import com.bgagnonadam.telephony.ws.api.contact.ContactResourceImpl;
-import com.bgagnonadam.telephony.ws.api.log.LogResource;
-import com.bgagnonadam.telephony.ws.api.log.LogResourceImpl;
+import com.bgagnonadam.telephony.ws.domain.calllog.CallLog;
+import com.bgagnonadam.telephony.ws.domain.calllog.CallLogAssembler;
+import com.bgagnonadam.telephony.ws.domain.calllog.CallLogRepository;
+import com.bgagnonadam.telephony.ws.domain.calllog.CallLogService;
 import com.bgagnonadam.telephony.ws.domain.contact.Contact;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactAssembler;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactService;
-import com.bgagnonadam.telephony.ws.domain.log.Log;
-import com.bgagnonadam.telephony.ws.domain.log.LogAssembler;
-import com.bgagnonadam.telephony.ws.domain.log.LogRepository;
-import com.bgagnonadam.telephony.ws.domain.log.LogService;
 import com.bgagnonadam.telephony.ws.http.CORSResponseFilter;
+import com.bgagnonadam.telephony.ws.infrastructure.calllog.CallLogDevDataFactory;
+import com.bgagnonadam.telephony.ws.infrastructure.calllog.CallLogRepositoryInMemory;
 import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactDevDataFactory;
 import com.bgagnonadam.telephony.ws.infrastructure.contact.ContactRepositoryInMemory;
-import com.bgagnonadam.telephony.ws.infrastructure.log.LogDevDataFactory;
-import com.bgagnonadam.telephony.ws.infrastructure.log.LogRepositoryInMemory;
 import org.eclipse.jetty.server.Handler;
 import org.eclipse.jetty.server.Server;
 import org.eclipse.jetty.server.handler.ContextHandlerCollection;
@@ -43,7 +43,7 @@ public class TelephonyWsMain {
 
     // Setup resources (API)
     ContactResource contactResource = createContactResource();
-    LogResource logResource = createLogResource();
+    CallLogResource callLogResource = createCallLogResource();
 
     // Setup API context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -54,7 +54,7 @@ public class TelephonyWsMain {
         HashSet<Object> resources = new HashSet<>();
         // Add resources to context
         resources.add(contactResource);
-        resources.add(logResource);
+        resources.add(callLogResource);
         return resources;
       }
     });
@@ -101,20 +101,20 @@ public class TelephonyWsMain {
     return new ContactResourceImpl(contactService);
   }
 
-  private static LogResource createLogResource() {
+  private static CallLogResource createCallLogResource() {
     // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
-    LogRepository logRepository = new LogRepositoryInMemory();
+    CallLogRepository callLogRepository = new CallLogRepositoryInMemory();
 
     // For development ease
     if (isDev) {
-      LogDevDataFactory logDevDataFactory = new LogDevDataFactory();
-      List<Log> logs = logDevDataFactory.createMockData();
-      logs.stream().forEach(logRepository::save);
+      CallLogDevDataFactory callLogDevDataFactory = new CallLogDevDataFactory();
+      List<CallLog> callLogs = callLogDevDataFactory.createMockData();
+      callLogs.stream().forEach(callLogRepository::save);
     }
 
-    LogAssembler logAssembler = new LogAssembler();
-    LogService logService = new LogService(logRepository, logAssembler);
+    CallLogAssembler callLogAssembler = new CallLogAssembler();
+    CallLogService callLogService = new CallLogService(callLogRepository, callLogAssembler);
 
-    return new LogResourceImpl(logService);
+    return new CallLogResourceImpl(callLogService);
   }
 }

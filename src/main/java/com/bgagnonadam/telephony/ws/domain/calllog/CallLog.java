@@ -1,6 +1,6 @@
-package com.bgagnonadam.telephony.ws.domain.log;
+package com.bgagnonadam.telephony.ws.domain.calllog;
 
-public class Log {
+public class CallLog {
   private String id;
   private String telephoneNumber;
   private String Date;
