@@ -1,4 +1,5 @@
-angular.module('telephonyApp',['ui.router','ngResource','telephonyApp.controllers','telephonyApp.services']);
+angular.module('telephonyApp',['ui.router','ngResource','telephonyApp.controllers','telephonyApp.contactServices',
+'telephonyApp.callLogServices']);
 
 angular.module('telephonyApp').config(function($stateProvider,$httpProvider){
     $stateProvider.state('contacts',{
@@ -17,6 +18,10 @@ angular.module('telephonyApp').config(function($stateProvider,$httpProvider){
         url:'/contacts/:id',
         templateUrl:'partials/contact-edit.html',
         controller:'ContactEditController'
+    }).state('callLogs',{
+       url:'/calllogs',
+       templateUrl:'partials/calllogs.html',
+       controller:'CallLogsController'
     });
 }).run(function($state){
    $state.go('contacts');
