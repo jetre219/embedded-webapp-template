@@ -1,4 +1,4 @@
-angular.module('telephonyApp.controllers', [])
+angular.module('telephonyApp.contactsControllers', [])
 .controller('ContactListController', function ($scope, $state, $window, Contact) {
 
     $scope.contacts = Contact.query();
@@ -39,21 +39,5 @@ angular.module('telephonyApp.controllers', [])
     };
 
     $scope.loadContact();
-
-}).controller('CallLogsController', function ($scope, $state, $stateParams, CallLog) {
-
-    $scope.callLogs = CallLog.query();
-
-    $scope.deleteCallLog = function (id) {
-        CallLog.delete(id).$promise.then(
-            function( value ){
-              $scope.callLogs = CallLog.query();
-            },
-
-            function( error ){
-              alert(error);
-            }
-        )
-    };
 
 });
