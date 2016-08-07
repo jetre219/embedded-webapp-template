@@ -66,9 +66,8 @@ public class TelephonyWsMain {
 
     // Setup static file context (WEBAPP)
     WebAppContext webapp = new WebAppContext();
-    webapp.setResourceBase(webapp.getClass().getClassLoader().getResource("webapp").toExternalForm());
+    webapp.setResourceBase("src/main/webapp");
     webapp.setContextPath("/");
-    webapp.setParentLoaderPriority(true);
 
     // Setup http server
     ContextHandlerCollection contexts = new ContextHandlerCollection();
