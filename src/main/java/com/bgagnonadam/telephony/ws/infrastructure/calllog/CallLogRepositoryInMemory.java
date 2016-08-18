@@ -4,7 +4,6 @@ import com.bgagnonadam.telephony.ws.domain.calllog.CallLog;
 import com.bgagnonadam.telephony.ws.domain.calllog.CallLogRepository;
 import jersey.repackaged.com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -15,11 +14,7 @@ public class CallLogRepositoryInMemory implements CallLogRepository {
 
   @Override
   public List<CallLog> findAll() {
-    if (callLogs.values().size() > 0) {
       return Lists.newArrayList(callLogs.values());
-    } else {
-      return new ArrayList<>();
-    }
   }
 
   @Override
