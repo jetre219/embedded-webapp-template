@@ -3,7 +3,7 @@ package com.bgagnonadam.telephony.ws.domain.calllog;
 public class CallLog {
   private String id;
   private String telephoneNumber;
-  private String Date;
+  private String date;
   private int durationInSeconds;
 
 
@@ -24,11 +24,11 @@ public class CallLog {
   }
 
   public String getDate() {
-    return Date;
+    return date;
   }
 
   public void setDate(String date) {
-    Date = date;
+    this.date = date;
   }
 
   public int getDurationInSeconds() {
