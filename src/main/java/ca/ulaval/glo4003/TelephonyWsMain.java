@@ -1,20 +1,12 @@
 package ca.ulaval.glo4003;
 
-import ca.ulaval.glo4003.ws.api.calllog.CallLogResource;
-import ca.ulaval.glo4003.ws.api.calllog.CallLogResourceImpl;
 import ca.ulaval.glo4003.ws.api.contact.ContactResource;
 import ca.ulaval.glo4003.ws.api.contact.ContactResourceImpl;
-import ca.ulaval.glo4003.ws.domain.calllog.CallLog;
-import ca.ulaval.glo4003.ws.domain.calllog.CallLogAssembler;
-import ca.ulaval.glo4003.ws.domain.calllog.CallLogRepository;
-import ca.ulaval.glo4003.ws.domain.calllog.CallLogService;
 import ca.ulaval.glo4003.ws.domain.contact.Contact;
 import ca.ulaval.glo4003.ws.domain.contact.ContactAssembler;
 import ca.ulaval.glo4003.ws.domain.contact.ContactRepository;
 import ca.ulaval.glo4003.ws.domain.contact.ContactService;
 import ca.ulaval.glo4003.ws.http.CORSResponseFilter;
-import ca.ulaval.glo4003.ws.infrastructure.calllog.CallLogDevDataFactory;
-import ca.ulaval.glo4003.ws.infrastructure.calllog.CallLogRepositoryInMemory;
 import ca.ulaval.glo4003.ws.infrastructure.contact.ContactDevDataFactory;
 import ca.ulaval.glo4003.ws.infrastructure.contact.ContactRepositoryInMemory;
 import org.eclipse.jetty.server.Handler;
@@ -43,7 +35,8 @@ public class TelephonyWsMain {
 
     // Setup resources (API)
     ContactResource contactResource = createContactResource();
-    CallLogResource callLogResource = createCallLogResource();
+    // TODO something to do here!
+    createCallLogResource();
 
     // Setup API context (JERSEY + JETTY)
     ServletContextHandler context = new ServletContextHandler(ServletContextHandler.SESSIONS);
@@ -54,7 +47,6 @@ public class TelephonyWsMain {
         HashSet<Object> resources = new HashSet<>();
         // Add resources to context
         resources.add(contactResource);
-        resources.add(callLogResource);
         return resources;
       }
     });
@@ -100,20 +92,7 @@ public class TelephonyWsMain {
     return new ContactResourceImpl(contactService);
   }
 
-  private static CallLogResource createCallLogResource() {
-    // Setup resources' dependencies (DOMAIN + INFRASTRUCTURE)
-    CallLogRepository callLogRepository = new CallLogRepositoryInMemory();
-
-    // For development ease
-    if (isDev) {
-      CallLogDevDataFactory callLogDevDataFactory = new CallLogDevDataFactory();
-      List<CallLog> callLogs = callLogDevDataFactory.createMockData();
-      callLogs.stream().forEach(callLogRepository::save);
-    }
-
-    CallLogAssembler callLogAssembler = new CallLogAssembler();
-    CallLogService callLogService = new CallLogService(callLogRepository, callLogAssembler);
-
-    return new CallLogResourceImpl(callLogService);
+  private static void createCallLogResource() {
+    // TODO something to do here!
   }
 }
