@@ -5,7 +5,6 @@ import com.bgagnonadam.telephony.ws.domain.contact.ContactNotFoundException;
 import com.bgagnonadam.telephony.ws.domain.contact.ContactRepository;
 import jersey.repackaged.com.google.common.collect.Lists;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -16,11 +15,7 @@ public class ContactRepositoryInMemory implements ContactRepository {
 
   @Override
   public List<Contact> findAll() {
-    if (!contacts.isEmpty()) {
       return Lists.newArrayList(contacts.values());
-    } else {
-      return new ArrayList<>();
-    }
   }
 
   @Override
