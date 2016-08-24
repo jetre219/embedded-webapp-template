@@ -10,7 +10,7 @@ coverage is minimal to encourage students to explore how to test. The exercise i
  together before using Dependency Injection frameworks.
 
 ## How to run
-* If Java and Maven are installed and your JAVA_HOME is set, execute `mvn exec:java`
+* If Java and Maven are installed and your JAVA_HOME is set, execute `mvn compile` then `mvn exec:java`
 * In an IDE, run as a Java Application the class `TelephonyWsMain`
 
 ### Made using:
