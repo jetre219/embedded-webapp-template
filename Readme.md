@@ -11,7 +11,7 @@ Voici une structure de projet qui n'utilise pas de plate-forme d'injection de d�
  de l'injection de dépendance.
 
 ##  Comment l'utiliser
-* Avec Java 8 et Maven d'installé et la variable JAVA_HOME configurée, exécutez `mvn exec:java`
+* Avec Java 8 et Maven d'installé et la variable JAVA_HOME configurée, exécutez `mvn compile` ensuite `mvn exec:java`
 * Dans un IDE, exécutez la classe `TelephonyWsMain` en tant que "Java Application"
 
 ### Fait avec:
