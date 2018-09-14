@@ -15,4 +15,4 @@ coverage is minimal to encourage students to explore how to test. The exercise i
 
 ### Made using:
 * https://www.sitepoint.com/creating-crud-app-minutes-angulars-resource/
-* http://www.freefavicon.com/
+* http://www.freefavicon.com/ croquette
